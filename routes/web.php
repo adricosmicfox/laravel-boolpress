@@ -14,22 +14,23 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('admin.home');
+    return view('welcome');
 })->name('index');
 
 Auth::routes();
 
 Route::middleware('auth')  //si collega alla cartella middleware
-->namespace('Admin')
-->name('admin.')   //cartella admin dove dentro ci sono i file
-->prefix('admin')
-->group(function () {
-    Route::get('/' , 'HomeController@index') // rotta se utente autenticato
-    ->name('index');
-    Route::resource('posts' , 'PostController' );
-}
-);
+    ->namespace('Admin')
+    ->name('admin.')   //cartella admin dove dentro ci sono i file
+    ->prefix('admin')
+    ->group(
+        function () {
+            Route::get('/', 'HomeController@index') // rotta se utente autenticato
+                ->name('index');
+            Route::resource('posts', 'PostController');
+        }
+    );
 
-Route::get('{any?}', function() {  // per qualsiasi altra rotta mandami in guest.home
+Route::get('{any?}', function () {  // per qualsiasi altra rotta mandami in guest.home
     return view("guest.home");
 })->where("any", ".*");
