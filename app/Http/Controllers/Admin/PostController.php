@@ -82,7 +82,9 @@ class PostController extends Controller
      */
     public function edit(Post $post)
     {
-        return view('admin.posts.edit', compact('post'));
+        $categories = Category::All();
+        $tags = Tag::All();
+        return view('admin.posts.edit', compact('post', 'categories', 'tags'));
     }
 
     /**
@@ -92,9 +94,15 @@ class PostController extends Controller
      * @param  \App\Post  $post
      * @return \Illuminate\Http\Response
      */
+
     public function update(Request $request, Post $post)
     {
         $postupdate = $request->all();
+        if (array_key_exists('tags', $postupdate)) {
+            $post->tags()->sync($postupdate['tags']);
+        } else {
+            $post->tags()->sync([]);
+        }
         $post->update($postupdate);
         $slug = Str::slug($post->title);
         $slug_base = $slug;
@@ -109,6 +117,7 @@ class PostController extends Controller
         $post->save();
         return redirect()->route('admin.posts.index');
     }
+
 
     /**
      * Remove the specified resource from storage.
