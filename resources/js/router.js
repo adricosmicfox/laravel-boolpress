@@ -7,8 +7,8 @@ Vue.use(VueRouter);
 const router = new VueRouter({
     routes: [
         {
-            path: '/',
-            name: 'home',
+            path: '/posts',
+            name: 'listposts',
             component: ListPostComponent
         }
     ]
