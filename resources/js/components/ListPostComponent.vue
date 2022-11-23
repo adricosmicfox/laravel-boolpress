@@ -1,10 +1,15 @@
 <template>
   <ol>
-    <li v-for='post in posts' :key="post.id">{{post.title}}</li>
+    <li v-for='post in posts' :key="post.id">
+        {{post.title}}
+        <button @click="takeId(post.id)">Details</button>
+    </li>
   </ol>
 </template>
 
 <script>
+import { emit } from 'process';
+
 export default {
     name: 'ListPostComponent',
     data(){
@@ -17,8 +22,12 @@ export default {
             console.log(response);
             this.posts=response.data;
         })
+    },
+    methods:{
+        takeId(id){
+            this.$router.push('/posts/'+id)
+        }
     }
-
 }
 </script>
 

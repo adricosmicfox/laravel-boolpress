@@ -15,7 +15,7 @@ class PostController extends Controller
      */
     public function index()
     {
-        $posts= post::all();
+        $posts = post::all();
         return response()->json($posts);
     }
 
@@ -48,7 +48,8 @@ class PostController extends Controller
      */
     public function show($id)
     {
-        //
+        $post = Post::find($id);
+        return response()->json($post);
     }
 
     /**
